@@ -80,6 +80,7 @@ module.exports = View.extend({
 
         this.eagerValidate = opts.eagerValidate;
         this.required = opts.required || false;
+        this.disabled = (typeof opts.disabled === 'boolean') ? opts.disabled : false;
         this.validClass = opts.validClass || 'input-valid';
         this.invalidClass = opts.invalidClass || 'input-invalid';
         if (opts.requiredMessage === undefined) {
@@ -120,8 +121,9 @@ module.exports = View.extend({
         }
         if (!this.select) throw new Error('no select found in template');
         if (matches(this.el, 'select')) this.select = this.el;
-        if (this.select) this.select.setAttribute('name', this.name);
-        if (this.select) this.select.setAttribute('tabindex', this.tabindex);
+        this.select.setAttribute('name', this.name);
+        this.select.setAttribute('tabindex', this.tabindex);
+        this.select.setAttribute('disabled', this.disabled);
 
         this.bindDOMEvents();
         this.renderOptions();
